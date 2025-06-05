@@ -3,37 +3,21 @@
 <input type="text" [formControl]="busca" placeholder="Buscar" />
 <button (click)="servico.carregarPersonagens()">Carregar</button>
 
-<ul>
-  <li *ngFor="let personagem of servico.todos()">
-    <a [routerLink]="['/personagem', personagem.id]">
-      <img [src]="personagem.image" width="50" />
-      {{ personagem.name }} - {{ personagem.species }}
-    </a>
-    <button
-      *ngIf="personagem.id >= 10000"
-      (click)="editar(personagem.id)"
-    >
-      Editar
-    </button>
-    <button
-      *ngIf="personagem.id >= 10000"
-      (click)="excluir(personagem.id)"
-    >
-      Excluir
-    </button>
-  </li>
-</ul>
-
 <mat-grid-list [cols]="cols" gutterSize="16">
   <mat-grid-tile *ngFor="let personagem of servico.todos()">
-    <mat-card class="personagem-card">
+    <mat-card
+      class="personagem-card"
+      [routerLink]="['/personagem', personagem.id]"
+    >
       <img mat-card-image [src]="personagem.image" [alt]="personagem.name" />
       <mat-card-title>{{ personagem.name }}</mat-card-title>
+      <mat-card-subtitle>{{ personagem.status }}</mat-card-subtitle>
       <mat-card-content>{{ personagem.species }}</mat-card-content>
       <button
         mat-button
         color="primary"
         [routerLink]="['/editar', personagem.id]"
+        (click)="$event.stopPropagation()"
         *ngIf="personagem.id >= 10000"
       >
         Editar
@@ -42,7 +26,7 @@
         mat-button
         color="warn"
         *ngIf="personagem.id >= 10000"
-        (click)="excluir(personagem.id)"
+        (click)="excluir(personagem.id); $event.stopPropagation()"
       >
         Excluir
       </button>

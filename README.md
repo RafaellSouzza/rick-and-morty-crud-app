@@ -34,6 +34,12 @@ json-server --watch db.json --port 3000
 npm start
 ```
 
+To run the API and Angular application together, use:
+
+```bash
+npm run start:dev
+```
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:

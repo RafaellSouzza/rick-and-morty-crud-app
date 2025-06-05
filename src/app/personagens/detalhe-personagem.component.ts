@@ -32,12 +32,12 @@ export class DetalhePersonagemComponent implements OnInit {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (this.servico.personagens().length === 0) {
+    if (this.servico.todos().length === 0) {
       this.servico.carregarPersonagens();
     }
     effect(() => {
       this.personagem.set(
-        this.servico.personagens().find((p) => p.id === id)
+        this.servico.todos().find((p) => p.id === id)
       );
     });
   }

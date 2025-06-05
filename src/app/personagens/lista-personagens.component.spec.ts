@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { RickAndMortyServico } from './rick-and-morty.servico';
 import { ListaPersonagensComponent } from './lista-personagens.component';
 import { of } from 'rxjs';
@@ -11,7 +12,7 @@ describe('ListaPersonagensComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, ListaPersonagensComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule, ListaPersonagensComponent],
     }).compileComponents();
   }));
 
@@ -26,7 +27,7 @@ describe('ListaPersonagensComponent', () => {
   });
 
   it('should display personagens', () => {
-    servico.personagens.set([{ id: 1, name: 'Morty', status: '', species: 'Human', image: '' }]);
+    servico.locais.set([{ id: 10000, name: 'Morty', status: '', species: 'Human', image: '' }]);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Morty');

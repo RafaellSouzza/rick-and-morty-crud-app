@@ -7,6 +7,8 @@ import {
 import express from 'express';
 import { join } from 'node:path';
 
+const API_BASE_URL = 'https://rickandmortyapi.com';
+
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
@@ -23,6 +25,25 @@ const angularApp = new AngularNodeAppEngine();
  * });
  * ```
  */
+
+/**
+ * Proxy Rick and Morty API requests through this server.
+ */
+app.use('/api', async (req, res, next) => {
+  try {
+    const url = API_BASE_URL + req.originalUrl;
+    const response = await fetch(url);
+    const body = await response.text();
+    res.status(response.status);
+    const contentType = response.headers.get('content-type');
+    if (contentType) {
+      res.set('Content-Type', contentType);
+    }
+    res.send(body);
+  } catch (error) {
+    next(error);
+  }
+});
 
 /**
  * Serve static files from /browser
@@ -66,3 +87,5 @@ if (isMainModule(import.meta.url)) {
  * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
  */
 export const reqHandler = createNodeRequestHandler(app);
+
+export { app };

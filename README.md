@@ -57,3 +57,26 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Installation
+
+Install dependencies with npm:
+
+```bash
+npm install
+```
+
+## Running Tests
+
+Execute unit tests with Jest:
+
+```bash
+npm test
+```
+
+This project requires at least 80% coverage as configured in `jest.config.js`.
+
+## Features
+
+- Angular standalone component displaying a list of characters from the [Rick and Morty API](https://rickandmortyapi.com/).
+- State management using Angular Signals.

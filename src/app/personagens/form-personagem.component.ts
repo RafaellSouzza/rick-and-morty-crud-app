@@ -10,6 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { RickAndMortyServico } from './rick-and-morty.servico';
 import { MatButtonModule } from '@angular/material/button';
+import { Personagem } from './personagem.model';
 
 @Component({
   selector: 'app-form-personagem',

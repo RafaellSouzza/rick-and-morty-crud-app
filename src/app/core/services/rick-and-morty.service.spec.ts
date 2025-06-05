@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RickAndMortyService } from './rick-and-morty.service';
-import { Character } from './character.model';
+import { Character } from '../models/character.model';
 
 describe('RickAndMortyService', () => {
   let service: RickAndMortyService;

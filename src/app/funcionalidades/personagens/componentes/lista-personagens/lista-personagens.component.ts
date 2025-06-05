@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RickAndMortyService } from './rick-and-morty.service';
+import { RickAndMortyService } from '../../../../core/services/rick-and-morty.service';
 
 @Component({
-  selector: 'app-character-list',
+  selector: 'app-lista-personagens',
   standalone: true,
   imports: [CommonModule],
   template: `
@@ -16,7 +16,7 @@ import { RickAndMortyService } from './rick-and-morty.service';
     </ul>
   `,
 })
-export class CharacterListComponent implements OnInit {
+export class ListaPersonagensComponent implements OnInit {
   constructor(public service: RickAndMortyService) {}
 
   ngOnInit() {

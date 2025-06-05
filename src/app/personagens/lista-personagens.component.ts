@@ -1,5 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -8,9 +10,12 @@ import { RickAndMortyServico } from './rick-and-morty.servico';
 @Component({
   selector: 'app-lista-personagens',
   standalone: true,
+
   imports: [CommonModule, MatCardModule, MatGridListModule, MatPaginatorModule],
   template: `
     <h2>Personagens</h2>
+    <input type="text" [formControl]="busca" placeholder="Buscar" />
+    <button (click)="servico.carregarPersonagens()">Carregar</button>
     <mat-grid-list [cols]="cols" gutterSize="16">
       <mat-grid-tile *ngFor="let personagem of servico.personagens()">
         <mat-card class="personagem-card">
@@ -29,7 +34,11 @@ import { RickAndMortyServico } from './rick-and-morty.servico';
   styleUrls: ['./lista-personagens.component.scss'],
 })
 export class ListaPersonagensComponent implements OnInit {
+
+  busca = new FormControl('');
+
   cols = 4;
+
   constructor(public servico: RickAndMortyServico) {}
 
   @HostListener('window:resize')
@@ -43,6 +52,16 @@ export class ListaPersonagensComponent implements OnInit {
 
   ngOnInit() {
     this.servico.carregarPersonagens();
+
+    this.busca.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((valor) => {
+        if (valor) {
+          this.servico.buscarPersonagens(valor);
+        } else {
+          this.servico.carregarPersonagens();
+        }
+      });
     this.setCols(window.innerWidth);
   }
 

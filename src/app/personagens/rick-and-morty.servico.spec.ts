@@ -29,4 +29,17 @@ describe('RickAndMortyServico', () => {
     expect(service.personagens()).toEqual(mockPersonagens);
     expect(service.totalCount()).toBe(1);
   });
+
+  it('should search personagens by name', () => {
+    const mockPersonagens: Personagem[] = [
+      { id: 2, name: 'Morty', status: 'Alive', species: 'Human', image: '' },
+    ];
+
+    service.buscarPersonagens('Morty');
+
+    const req = httpMock.expectOne('https://rickandmortyapi.com/api/character?name=Morty');
+    req.flush({ results: mockPersonagens });
+
+    expect(service.personagens()).toEqual(mockPersonagens);
+  });
 });

@@ -1,0 +1,30 @@
+<h2 *ngIf="!editMode">Novo Personagem</h2>
+<h2 *ngIf="editMode">Editar Personagem</h2>
+<form [formGroup]="form" (ngSubmit)="salvar()">
+  <label>
+    Nome:
+    <input formControlName="name" />
+  </label>
+  <label>
+    Status:
+    <input formControlName="status" />
+  </label>
+  <label>
+    Espécie:
+    <input formControlName="species" />
+  </label>
+  <label>
+    Gênero:
+    <input formControlName="gender" />
+  </label>
+  <label>
+    Origem:
+    <input formControlName="origin" />
+  </label>
+  <label>
+    Imagem URL:
+    <input formControlName="image" />
+  </label>
+  <button mat-button type="submit">Salvar</button>
+  <a routerLink="/personagens">Voltar</a>
+</form>

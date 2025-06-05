@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { FormPersonagemComponent } from './form-personagem.component';
-import { RickAndMortyServico } from './rick-and-morty.servico';
+import { RickAndMortyServico } from '../rick-and-morty.servico';
 
 describe('FormPersonagemComponent', () => {
   let component: FormPersonagemComponent;

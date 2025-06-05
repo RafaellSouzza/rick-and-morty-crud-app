@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Personagem } from './personagem.model';
+import { Personagem } from '../personagem.model';
 
 @Component({
   selector: 'app-personagem-dialog',

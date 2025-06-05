@@ -1,8 +1,8 @@
 import { Component, OnInit, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { RickAndMortyServico } from './rick-and-morty.servico';
-import { Personagem } from './personagem.model';
+import { RickAndMortyServico } from '../rick-and-morty.servico';
+import { Personagem } from '../personagem.model';
 
 @Component({
   selector: 'app-detalhe-personagem',

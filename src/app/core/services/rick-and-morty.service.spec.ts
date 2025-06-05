@@ -1,12 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-<<<<<<<< HEAD:src/app/personagens/rick-and-morty.servico.spec.ts
 import { RickAndMortyServico } from './rick-and-morty.servico';
 import { Personagem } from './personagem.model';
-========
-import { RickAndMortyService } from './rick-and-morty.service';
-import { Character } from '../models/character.model';
->>>>>>>> main:src/app/core/services/rick-and-morty.service.spec.ts
 
 describe('RickAndMortyServico', () => {
   let service: RickAndMortyServico;

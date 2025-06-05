@@ -6,12 +6,22 @@ import { Personagem } from './personagem.model';
 export class RickAndMortyServico {
   private readonly baseUrl = 'https://rickandmortyapi.com/api';
   personagens = signal<Personagem[]>([]);
+  total = signal(0);
 
   constructor(private http: HttpClient) {}
 
-  carregarPersonagens() {
+  carregarPersonagens(pagina = 1) {
     this.http
-      .get<{ results: Personagem[] }>(`${this.baseUrl}/character`)
-      .subscribe(({ results }) => this.personagens.set(results));
+      .get<{ info: { count: number }; results: Personagem[] }>(
+        `${this.baseUrl}/character/?page=${pagina}`
+      )
+      .subscribe(({ info, results }) => {
+        this.total.set(info.count);
+        this.personagens.set(results);
+      });
+  }
+
+  totalCount() {
+    return this.total();
   }
 }

@@ -7,7 +7,7 @@
   <mat-grid-tile *ngFor="let personagem of servico.todos()">
     <mat-card
       class="personagem-card"
-      [routerLink]="['/personagem', personagem.id]"
+      (click)="abrirDetalhe(personagem)"
     >
       <img mat-card-image [src]="personagem.image" [alt]="personagem.name" />
       <mat-card-title>{{ personagem.name }}</mat-card-title>

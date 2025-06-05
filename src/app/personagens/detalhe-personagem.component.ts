@@ -8,19 +8,8 @@ import { Personagem } from './personagem.model';
   selector: 'app-detalhe-personagem',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  template: `
-    <ng-container *ngIf="personagem() as p">
-      <h2>{{ p.name }}</h2>
-      <img [src]="p.image" width="200" />
-      <p>Status: {{ p.status }}</p>
-      <p>Species: {{ p.species }}</p>
-      <p *ngIf="p.type">Type: {{ p.type }}</p>
-      <p *ngIf="p.gender">Gender: {{ p.gender }}</p>
-      <p *ngIf="p.origin">Origin: {{ p.origin?.name }}</p>
-      <p *ngIf="p.location">Location: {{ p.location?.name }}</p>
-      <a routerLink="/">Voltar</a>
-    </ng-container>
-  `,
+  templateUrl: './detalhe-personagem.component.html',
+  styleUrls: ['./detalhe-personagem.component.scss'],
 })
 export class DetalhePersonagemComponent implements OnInit {
   personagem = signal<Personagem | undefined>(undefined);

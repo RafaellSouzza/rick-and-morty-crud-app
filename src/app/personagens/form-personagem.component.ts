@@ -16,38 +16,8 @@ import { Personagem } from './personagem.model';
   selector: 'app-form-personagem',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink, MatButtonModule],
-  template: `
-    <h2 *ngIf="!editMode">Novo Personagem</h2>
-    <h2 *ngIf="editMode">Editar Personagem</h2>
-    <form [formGroup]="form" (ngSubmit)="salvar()">
-      <label>
-        Nome:
-        <input formControlName="name" />
-      </label>
-      <label>
-        Status:
-        <input formControlName="status" />
-      </label>
-      <label>
-        Espécie:
-        <input formControlName="species" />
-      </label>
-      <label>
-        Gênero:
-        <input formControlName="gender" />
-      </label>
-      <label>
-        Origem:
-        <input formControlName="origin" />
-      </label>
-      <label>
-        Imagem URL:
-        <input formControlName="image" />
-      </label>
-      <button mat-button type="submit">Salvar</button>
-      <a routerLink="/">Voltar</a>
-    </form>
-  `,
+  templateUrl: './form-personagem.component.html',
+  styleUrls: ['./form-personagem.component.scss'],
 })
 export class FormPersonagemComponent implements OnInit {
   form: FormGroup<{
@@ -109,6 +79,6 @@ export class FormPersonagemComponent implements OnInit {
     } else {
       this.servico.adicionarPersonagem(personagem);
     }
-    this.router.navigate(['/']);
+    this.router.navigate(['/personagens']);
   }
 }

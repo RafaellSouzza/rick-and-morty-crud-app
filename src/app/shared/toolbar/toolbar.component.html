@@ -1,0 +1,11 @@
+<mat-toolbar color="primary" class="app-toolbar">
+  <span class="logo" routerLink="/">Rick and Morty</span>
+  <span class="spacer"></span>
+  <input
+    matInput
+    type="text"
+    [formControl]="busca"
+    placeholder="Buscar"
+  />
+  <a mat-button color="accent" routerLink="/novo">Novo Personagem</a>
+</mat-toolbar>

@@ -1,31 +1,31 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { RickAndMortyService } from './rick-and-morty.service';
-import { Character } from './character.model';
+import { RickAndMortyServico } from './rick-and-morty.servico';
+import { Personagem } from './personagem.model';
 
-describe('RickAndMortyService', () => {
-  let service: RickAndMortyService;
+describe('RickAndMortyServico', () => {
+  let service: RickAndMortyServico;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [RickAndMortyService],
+      providers: [RickAndMortyServico],
     });
-    service = TestBed.inject(RickAndMortyService);
+    service = TestBed.inject(RickAndMortyServico);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it('should load characters', () => {
-    const mockCharacters: Character[] = [
+  it('should load personagens', () => {
+    const mockPersonagens: Personagem[] = [
       { id: 1, name: 'Rick', status: 'Alive', species: 'Human', image: '' },
     ];
 
-    service.loadCharacters();
+    service.carregarPersonagens();
 
     const req = httpMock.expectOne('https://rickandmortyapi.com/api/character');
-    req.flush({ results: mockCharacters });
+    req.flush({ results: mockPersonagens });
 
-    expect(service.characters()).toEqual(mockCharacters);
+    expect(service.personagens()).toEqual(mockPersonagens);
   });
 });

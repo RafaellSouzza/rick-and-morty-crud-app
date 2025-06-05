@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { ListaPersonagensComponent } from './personagens/lista-personagens.component';
-import { DetalhePersonagemComponent } from './personagens/detalhe-personagem.component';
-import { FormPersonagemComponent } from './personagens/form-personagem.component';
+import { ListaPersonagensComponent } from './personagens/lista-personagens/lista-personagens.component';
+import { DetalhePersonagemComponent } from './personagens/detalhe-personagem/detalhe-personagem.component';
+import { FormPersonagemComponent } from './personagens/form-personagem/form-personagem.component';
 import { HomeComponent } from './home/home.component';
 
 

@@ -8,10 +8,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { PersonagemDialogComponent } from './personagem-dialog.component';
-import { Personagem } from './personagem.model';
+import { PersonagemDialogComponent } from '../personagem-dialog/personagem-dialog.component';
+import { Personagem } from '../personagem.model';
 
-import { RickAndMortyServico } from './rick-and-morty.servico';
+import { RickAndMortyServico } from '../rick-and-morty.servico';
 
 @Component({
   selector: 'app-lista-personagens',

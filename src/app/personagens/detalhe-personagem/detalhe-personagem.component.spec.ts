@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { RickAndMortyServico } from './rick-and-morty.servico';
+import { RickAndMortyServico } from '../rick-and-morty.servico';
 import { DetalhePersonagemComponent } from './detalhe-personagem.component';
 
 describe('DetalhePersonagemComponent', () => {

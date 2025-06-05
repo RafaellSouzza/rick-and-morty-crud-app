@@ -94,6 +94,13 @@ Install dependencies with npm:
 npm install
 ```
 
+Ensure `zone.js` is installed, as Jest relies on it for Angular testing. If it
+is missing, install it with:
+
+```bash
+npm install zone.js
+```
+
 ## Running Tests
 
 Execute unit tests with Jest:

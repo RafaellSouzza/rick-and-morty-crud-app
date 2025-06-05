@@ -1,12 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-<<<<<<<< HEAD:src/app/personagens/rick-and-morty.servico.spec.ts
 import { RickAndMortyServico } from './rick-and-morty.servico';
 import { Personagem } from './personagem.model';
-========
-import { RickAndMortyService } from './rick-and-morty.service';
-import { Character } from '../models/character.model';
->>>>>>>> main:src/app/core/services/rick-and-morty.service.spec.ts
 
 describe('RickAndMortyServico', () => {
   let service: RickAndMortyServico;
@@ -29,6 +24,19 @@ describe('RickAndMortyServico', () => {
     service.carregarPersonagens();
 
     const req = httpMock.expectOne('https://rickandmortyapi.com/api/character');
+    req.flush({ results: mockPersonagens });
+
+    expect(service.personagens()).toEqual(mockPersonagens);
+  });
+
+  it('should search personagens by name', () => {
+    const mockPersonagens: Personagem[] = [
+      { id: 2, name: 'Morty', status: 'Alive', species: 'Human', image: '' },
+    ];
+
+    service.buscarPersonagens('Morty');
+
+    const req = httpMock.expectOne('https://rickandmortyapi.com/api/character?name=Morty');
     req.flush({ results: mockPersonagens });
 
     expect(service.personagens()).toEqual(mockPersonagens);

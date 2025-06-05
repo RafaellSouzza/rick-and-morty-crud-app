@@ -7,5 +7,11 @@
   <p *ngIf="p.gender">Gender: {{ p.gender }}</p>
   <p *ngIf="p.origin">Origin: {{ p.origin?.name }}</p>
   <p *ngIf="p.location">Location: {{ p.location?.name }}</p>
+  <div *ngIf="p.episode?.length">
+    Episódios:
+    <ul>
+      <li *ngFor="let ep of p.episode">{{ ep }}</li>
+    </ul>
+  </div>
   <a routerLink="/personagens">Voltar</a>
 </ng-container>

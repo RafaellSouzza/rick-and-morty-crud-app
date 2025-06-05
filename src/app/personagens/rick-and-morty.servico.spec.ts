@@ -42,4 +42,23 @@ describe('RickAndMortyServico', () => {
 
     expect(service.personagens()).toEqual(mockPersonagens);
   });
+
+  it('should manage local personagens', () => {
+    service.adicionarPersonagem({
+      id: 0,
+      name: 'Local',
+      status: 'Alive',
+      species: 'Human',
+      image: ''
+    });
+
+    expect(service.todos().length).toBe(1);
+
+    const added = service.todos()[0];
+    service.atualizarPersonagem({ ...added, name: 'Editado' });
+    expect(service.todos()[0].name).toBe('Editado');
+
+    service.removerPersonagem(added.id);
+    expect(service.todos().length).toBe(0);
+  });
 });

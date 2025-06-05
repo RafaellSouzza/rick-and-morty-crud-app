@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { RickAndMortyServico } from './rick-and-morty.servico';
 import { DetalhePersonagemComponent } from './detalhe-personagem.component';
@@ -12,7 +13,7 @@ describe('DetalhePersonagemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, DetalhePersonagemComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule, DetalhePersonagemComponent],
       providers: [
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '1' } } } },
       ],
@@ -23,7 +24,7 @@ describe('DetalhePersonagemComponent', () => {
     fixture = TestBed.createComponent(DetalhePersonagemComponent);
     component = fixture.componentInstance;
     servico = TestBed.inject(RickAndMortyServico);
-    servico.personagens.set([{ id: 1, name: 'Morty', status: '', species: 'Human', image: '' }]);
+    servico.locais.set([{ id: 10000, name: 'Morty', status: '', species: 'Human', image: '' }]);
     fixture.detectChanges();
   });
 

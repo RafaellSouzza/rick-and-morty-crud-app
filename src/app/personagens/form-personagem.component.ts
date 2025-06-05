@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators,
+  FormGroup,
+  FormControl,
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { RickAndMortyServico } from './rick-and-morty.servico';
 import { MatButtonModule } from '@angular/material/button';
@@ -43,15 +49,15 @@ import { MatButtonModule } from '@angular/material/button';
   `,
 })
 export class FormPersonagemComponent implements OnInit {
-  form = this.fb.group({
-    id: [0],
-    name: ['', Validators.required],
-    status: [''],
-    species: [''],
-    gender: [''],
-    origin: [''],
-    image: [''],
-  });
+  form: FormGroup<{
+    id: FormControl<number>;
+    name: FormControl<string>;
+    status: FormControl<string>;
+    species: FormControl<string>;
+    gender: FormControl<string>;
+    origin: FormControl<string>;
+    image: FormControl<string>;
+  }>;
 
   editMode = false;
 
@@ -60,7 +66,17 @@ export class FormPersonagemComponent implements OnInit {
     private servico: RickAndMortyServico,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.form = this.fb.nonNullable.group({
+      id: 0,
+      name: ['', Validators.required],
+      status: '',
+      species: '',
+      gender: '',
+      origin: '',
+      image: '',
+    });
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -68,13 +84,25 @@ export class FormPersonagemComponent implements OnInit {
       this.editMode = true;
       const personagem = this.servico.localPersonagemById(+id);
       if (personagem) {
-        this.form.patchValue(personagem);
+        this.form.patchValue({
+          ...personagem,
+          origin: personagem.origin?.name ?? '',
+        });
       }
     }
   }
 
   salvar() {
-    const personagem = this.form.getRawValue();
+    const valor = this.form.getRawValue();
+    const personagem: Personagem = {
+      id: valor.id,
+      name: valor.name,
+      status: valor.status,
+      species: valor.species,
+      gender: valor.gender,
+      origin: valor.origin ? { name: valor.origin, url: '' } : undefined,
+      image: valor.image,
+    };
     if (this.editMode) {
       this.servico.atualizarPersonagem(personagem);
     } else {

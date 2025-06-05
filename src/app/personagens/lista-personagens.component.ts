@@ -7,6 +7,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { PersonagemDialogComponent } from './personagem-dialog.component';
+import { Personagem } from './personagem.model';
 
 import { RickAndMortyServico } from './rick-and-morty.servico';
 
@@ -22,6 +25,8 @@ import { RickAndMortyServico } from './rick-and-morty.servico';
     MatGridListModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatDialogModule,
+    PersonagemDialogComponent,
   ],
 
   templateUrl: './lista-personagens.component.html',
@@ -33,7 +38,11 @@ export class ListaPersonagensComponent implements OnInit {
 
   cols = 4;
 
-  constructor(public servico: RickAndMortyServico, private router: Router) {}
+  constructor(
+    public servico: RickAndMortyServico,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   @HostListener('window:resize')
   onResize() {
@@ -61,6 +70,12 @@ export class ListaPersonagensComponent implements OnInit {
 
   onPage(event: PageEvent) {
     this.servico.carregarPersonagens(event.pageIndex + 1);
+  }
+
+  abrirDetalhe(personagem: Personagem) {
+    this.dialog.open(PersonagemDialogComponent, {
+      data: personagem,
+    });
   }
 
   editar(id: number) {

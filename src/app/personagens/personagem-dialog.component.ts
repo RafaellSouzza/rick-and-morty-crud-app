@@ -2,12 +2,13 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { Personagem } from './personagem.model';
 
 @Component({
   selector: 'app-personagem-dialog',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatCardModule],
   templateUrl: './personagem-dialog.component.html',
   styleUrls: ['./personagem-dialog.component.scss'],
 })

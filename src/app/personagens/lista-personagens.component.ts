@@ -1,21 +1,34 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+
 import { RickAndMortyServico } from './rick-and-morty.servico';
 
 @Component({
   selector: 'app-lista-personagens',
   standalone: true,
 
-  imports: [CommonModule, MatCardModule, MatGridListModule, MatPaginatorModule],
+  imports: [CommonModule, MatCardModule, MatGridListModule, MatPaginatorModule,RouterLink],
+
   template: `
     <h2>Personagens</h2>
     <input type="text" [formControl]="busca" placeholder="Buscar" />
     <button (click)="servico.carregarPersonagens()">Carregar</button>
+
+    <ul>
+      <li *ngFor="let personagem of servico.personagens()">
+        <a [routerLink]="['/personagem', personagem.id]">
+          <img [src]="personagem.image" width="50" />
+          {{ personagem.name }} - {{ personagem.species }}
+        </a>
+      </li>
+    </ul>
+
     <mat-grid-list [cols]="cols" gutterSize="16">
       <mat-grid-tile *ngFor="let personagem of servico.personagens()">
         <mat-card class="personagem-card">
@@ -30,6 +43,7 @@ import { RickAndMortyServico } from './rick-and-morty.servico';
       [pageSize]="20"
       (page)="onPage($event)"
     ></mat-paginator>
+
   `,
   styleUrls: ['./lista-personagens.component.scss'],
 })

@@ -12,6 +12,28 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
+## JSON Server
+
+This project can use [JSON Server](https://github.com/typicode/json-server) to simulate a REST API for CRUD operations.
+
+1. Install JSON Server globally:
+
+```bash
+npm install -g json-server
+```
+
+2. Start the server from the project root:
+
+```bash
+json-server --watch db.json --port 3000
+```
+
+3. Run the Angular app with the provided proxy configuration:
+
+```bash
+npm start
+```
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:

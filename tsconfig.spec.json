@@ -7,7 +7,9 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "module": "commonjs",
+    "target": "ES2020"
   },
   "include": [
     "src/**/*.ts"

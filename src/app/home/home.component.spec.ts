@@ -20,4 +20,9 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render lista de personagens', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Personagens');
+  });
 });

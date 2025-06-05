@@ -1,0 +1,19 @@
+.app-toolbar {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+input[matInput] {
+  margin-right: 1rem;
+  max-width: 200px;
+}

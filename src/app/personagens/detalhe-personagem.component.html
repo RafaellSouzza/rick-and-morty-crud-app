@@ -5,8 +5,8 @@
   <p>Species: {{ p.species }}</p>
   <p *ngIf="p.type">Type: {{ p.type }}</p>
   <p *ngIf="p.gender">Gender: {{ p.gender }}</p>
-  <p *ngIf="p.origin">Origin: {{ p.origin?.name }}</p>
-  <p *ngIf="p.location">Location: {{ p.location?.name }}</p>
+  <p *ngIf="p.origin">Origin: {{ p.origin.name }}</p>
+  <p *ngIf="p.location">Location: {{ p.location.name }}</p>
   <div *ngIf="p.episode?.length">
     Episódios:
     <ul>

@@ -6,9 +6,9 @@
     <p><strong>Species:</strong> {{ data.species }}</p>
     <p *ngIf="data.type"><strong>Type:</strong> {{ data.type }}</p>
     <p *ngIf="data.gender"><strong>Gender:</strong> {{ data.gender }}</p>
-    <p *ngIf="data.origin"><strong>Origin:</strong> {{ data.origin?.name }}</p>
-    <p *ngIf="data.location"><strong>Location:</strong> {{ data.location?.name }}</p>
-    <p *ngIf="data.episode?.length"><strong>Episodes:</strong> {{ data.episode.join(', ') }}</p>
+  <p *ngIf="data.origin"><strong>Origin:</strong> {{ data.origin.name }}</p>
+  <p *ngIf="data.location"><strong>Location:</strong> {{ data.location.name }}</p>
+  <p *ngIf="data.episode?.length"><strong>Episodes:</strong> {{ data.episode!.join(', ') }}</p>
     <p *ngIf="data.url"><strong>URL:</strong> {{ data.url }}</p>
     <p *ngIf="data.created"><strong>Created:</strong> {{ data.created }}</p>
   </mat-card-content>

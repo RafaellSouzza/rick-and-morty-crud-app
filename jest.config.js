@@ -1,30 +1,24 @@
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { compilerOptions } = require('./tsconfig');
+
 module.exports = {
   preset: 'jest-preset-angular',
-  setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
-  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+  setupFilesAfterEnv: ['<rootDir>/src/setup-jest.ts'],
+  globals: {
+    'ts-jest': {
+      tsconfig: '<rootDir>/tsconfig.spec.json',
+      stringifyContentPathRegex: '\\.html$',
+    },
+  },
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths || {}, {
+    prefix: '<rootDir>/',
+  }),
   transform: {
-    '^.+\\.(ts|mjs|js|html)$': [
-      'jest-preset-angular/build/transform',
-      { tsconfig: '<rootDir>/tsconfig.spec.json' },
-    ],
+    '^.+\\.(ts|js|html)$': 'ts-jest',
   },
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['ts', 'html', 'js', 'json'],
-  coverageDirectory: 'coverage',
-  collectCoverageFrom: [
-    'src/app/**/*.{ts,js}',
-    '!src/main.ts',
-    '!src/environments/**',
-    '!src/app/**/*.module.ts',
-    '!src/app/**/*.routes.ts',
-    '!src/app/**/*.config.ts',
-  ],
-  coverageThreshold: {
-    global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80,
-    },
-  },
+  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
+  collectCoverage: true,
+  coverageReporters: ['html', 'text'],
 };

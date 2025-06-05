@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Character } from './character.model';
+import { Character } from '../models/character.model';
 
 @Injectable({ providedIn: 'root' })
 export class RickAndMortyService {

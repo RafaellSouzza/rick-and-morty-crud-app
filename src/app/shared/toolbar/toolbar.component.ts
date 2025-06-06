@@ -50,6 +50,10 @@ export class ToolbarComponent implements OnInit {
   }
 
   abrirNovo() {
-    this.dialog.open(FormPersonagemComponent, { width: '400px' });
+    this.dialog.open(FormPersonagemComponent, {
+      width: '90vw',
+      maxWidth: '600px',
+      maxHeight: '90vh',
+    });
   }
 }

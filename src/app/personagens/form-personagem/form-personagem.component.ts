@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -8,6 +8,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
 import { RickAndMortyServico } from '../rick-and-morty.servico';
 import { MatButtonModule } from '@angular/material/button';
 import { Personagem } from '../personagem.model';
@@ -36,7 +37,8 @@ export class FormPersonagemComponent implements OnInit {
     private fb: FormBuilder,
     private servico: RickAndMortyServico,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    @Optional() private dialogRef?: MatDialogRef<FormPersonagemComponent>
   ) {
     this.form = this.fb.nonNullable.group({
       id: 0,
@@ -79,6 +81,21 @@ export class FormPersonagemComponent implements OnInit {
     } else {
       this.servico.adicionarPersonagem(personagem);
     }
-    this.router.navigate(['/personagens']);
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    } else {
+      this.router.navigate(['/personagens']);
+    }
+  }
+
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.form.controls.image.setValue(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }

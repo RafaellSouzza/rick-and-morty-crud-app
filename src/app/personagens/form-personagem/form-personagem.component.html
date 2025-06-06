@@ -25,6 +25,16 @@
     Imagem URL:
     <input formControlName="image" />
   </label>
+  <label>
+    Selecionar Imagem:
+    <input type="file" (change)="onFileSelected($event)" />
+  </label>
+  <img
+    *ngIf="form.controls.image.value"
+    [src]="form.controls.image.value"
+    alt="preview"
+    style="max-width: 100%; margin-top: 8px"
+  />
   <button mat-button type="submit">Salvar</button>
   <a routerLink="/personagens">Voltar</a>
 </form>

@@ -7,5 +7,7 @@
     [formControl]="busca"
     placeholder="Buscar"
   />
-  <a mat-button color="accent" routerLink="/novo">Novo Personagem</a>
+  <button mat-button color="accent" (click)="abrirNovo()">
+    Novo Personagem
+  </button>
 </mat-toolbar>

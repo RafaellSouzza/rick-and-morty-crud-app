@@ -5,6 +5,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { FormPersonagemComponent } from '../../personagens/form-personagem/form-personagem.component';
 import { RickAndMortyServico } from '../../personagens/rick-and-morty.servico';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
@@ -18,6 +20,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
     MatToolbarModule,
     MatInputModule,
     MatButtonModule,
+    MatDialogModule,
   ],
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
@@ -25,7 +28,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 export class ToolbarComponent implements OnInit {
   busca = new FormControl('');
 
-  constructor(public servico: RickAndMortyServico) {}
+  constructor(
+    public servico: RickAndMortyServico,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.busca.valueChanges
@@ -37,5 +43,9 @@ export class ToolbarComponent implements OnInit {
           this.servico.carregarPersonagens();
         }
       });
+  }
+
+  abrirNovo() {
+    this.dialog.open(FormPersonagemComponent, { width: '400px' });
   }
 }

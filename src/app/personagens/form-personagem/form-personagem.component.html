@@ -30,8 +30,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Tipo de Imagem</mat-label>
       <mat-select
-        [(ngModel)]="imageInputType"
-        name="imageType"
+        formControlName="imageType"
         (selectionChange)="onImageTypeChange()"
       >
         <mat-option value="url">URL</mat-option>
@@ -39,13 +38,16 @@
       </mat-select>
     </mat-form-field>
 
-    <div [ngSwitch]="imageInputType">
+    <div [ngSwitch]="form.controls.imageType.value">
       <mat-form-field *ngSwitchCase="'url'" appearance="fill">
         <mat-label>Imagem URL</mat-label>
         <input matInput formControlName="image" />
       </mat-form-field>
       <div *ngSwitchCase="'file'" class="file-input">
-        <input type="file" (change)="onFileSelected($event)" />
+        <input type="file" #fileInput (change)="onFileSelected($event)" hidden />
+        <button mat-raised-button type="button" (click)="fileInput.click()">
+          Escolher Arquivo
+        </button>
       </div>
     </div>
 

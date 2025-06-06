@@ -1,8 +1,8 @@
 form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  max-width: 600px;
+  max-width: 500px;
   margin: auto;
 }
 
@@ -13,25 +13,23 @@ form {
 .preview {
   max-width: 150px;
   margin: 0.5rem auto;
-  grid-column: 1 / -1;
+  align-self: center;
 }
 
 .actions {
   display: flex;
   gap: 0.5rem;
-  grid-column: 1 / -1;
+  justify-content: flex-end;
 }
 
 .file-input {
   padding: 0.5rem 0;
 }
 
-div[ngswitch] {
-  grid-column: 1 / -1;
-}
+
 
 @media (max-width: 600px) {
   form {
-    grid-template-columns: 1fr;
+    max-width: 90%;
   }
 }

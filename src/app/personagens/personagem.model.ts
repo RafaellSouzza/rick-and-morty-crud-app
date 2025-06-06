@@ -11,4 +11,5 @@ export interface Personagem {
   episode?: string[];
   url?: string;
   created?: string;
+  bloqueado?: boolean;
 }

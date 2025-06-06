@@ -3,6 +3,7 @@ import { ListaPersonagensComponent } from './personagens/lista-personagens/lista
 import { DetalhePersonagemComponent } from './personagens/detalhe-personagem/detalhe-personagem.component';
 import { FormPersonagemComponent } from './personagens/form-personagem/form-personagem.component';
 import { HomeComponent } from './home/home.component';
+import { ListaBloqueadosComponent } from './personagens/lista-bloqueados/lista-bloqueados.component';
 
 
 export const routes: Routes = [
@@ -11,4 +12,5 @@ export const routes: Routes = [
   { path: 'personagem/:id', component: DetalhePersonagemComponent },
   { path: 'novo', component: FormPersonagemComponent },
   { path: 'editar/:id', component: FormPersonagemComponent },
+  { path: 'bloqueados', component: ListaBloqueadosComponent },
 ];

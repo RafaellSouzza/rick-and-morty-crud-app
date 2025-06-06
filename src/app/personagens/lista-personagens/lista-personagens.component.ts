@@ -73,9 +73,13 @@ export class ListaPersonagensComponent implements OnInit {
     this.router.navigate(['/editar', id]);
   }
 
-  excluir(id: number) {
+  excluir(personagem: Personagem) {
     if (confirm('Excluir personagem?')) {
-      this.servico.removerPersonagem(id);
+      if (personagem.id >= 10000) {
+        this.servico.removerPersonagem(personagem.id);
+      } else {
+        this.servico.bloquearPersonagem(personagem);
+      }
     }
   }
 }

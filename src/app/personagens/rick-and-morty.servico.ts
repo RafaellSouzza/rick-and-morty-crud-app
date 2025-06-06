@@ -6,26 +6,45 @@ import { Personagem } from './personagem.model';
 export class RickAndMortyServico {
   private readonly baseUrl = 'https://rickandmortyapi.com/api';
   private readonly localUrl = '/api/personagens';
+  private readonly bloqueadosUrl = '/api/bloqueados';
   personagens = signal<Personagem[]>([]);
   locais = signal<Personagem[]>([]);
+  bloqueados = signal<Personagem[]>([]);
   filtro = signal('');
   total = signal(0);
 
   todos = computed(() => {
     const filtro = this.filtro().toLowerCase();
-    const locais = this.locais()
+    const locais = this.locais().filter((p) =>
+      p.name.toLowerCase().includes(filtro)
+    );
+    const bloqueadosIds = new Set(this.bloqueados().map((b) => b.id));
+    const remotos = this.personagens()
+      .filter((p) => !bloqueadosIds.has(p.id))
       .filter((p) => p.name.toLowerCase().includes(filtro));
-    return [...locais, ...this.personagens()];
+    return [...locais, ...remotos];
   });
 
   constructor(private http: HttpClient) {
     this.carregarLocais();
+    this.carregarBloqueados();
   }
 
   private carregarLocais() {
     this.http.get<Personagem[]>(this.localUrl).subscribe((res) => {
       this.locais.set(res);
-      this.total.set(this.personagens().length + res.length);
+      this.total.set(
+        this.personagens().length + res.length - this.bloqueados().length
+      );
+    });
+  }
+
+  private carregarBloqueados() {
+    this.http.get<Personagem[]>(this.bloqueadosUrl).subscribe((res) => {
+      this.bloqueados.set(res);
+      this.total.set(
+        this.personagens().length + this.locais().length - res.length
+      );
     });
   }
 
@@ -36,7 +55,9 @@ export class RickAndMortyServico {
         `${this.baseUrl}/character/?page=${pagina}`
       )
       .subscribe(({ info, results }) => {
-        this.total.set(info.count + this.locais().length);
+        this.total.set(
+          info.count + this.locais().length - this.bloqueados().length
+        );
         this.personagens.set(results);
       });
   }
@@ -55,7 +76,11 @@ export class RickAndMortyServico {
         const locaisFiltrados = this.locais().filter((p) =>
           p.name.toLowerCase().includes(nome.toLowerCase())
         );
-        this.total.set(results.length + locaisFiltrados.length);
+        const bloqueadosIds = new Set(this.bloqueados().map((b) => b.id));
+        const remotosFiltrados = results.filter(
+          (p) => !bloqueadosIds.has(p.id)
+        ).length;
+        this.total.set(remotosFiltrados + locaisFiltrados.length);
       });
   }
 
@@ -86,6 +111,22 @@ export class RickAndMortyServico {
     this.http.delete(`${this.localUrl}/${id}`).subscribe(() => {
       this.locais.update((list) => list.filter((p) => p.id !== id));
       this.total.set(this.total() - 1);
+    });
+  }
+
+  bloquearPersonagem(personagem: Personagem) {
+    this.http
+      .post<Personagem>(this.bloqueadosUrl, { ...personagem, bloqueado: true })
+      .subscribe((res) => {
+        this.bloqueados.update((list) => [...list, res]);
+        this.total.set(this.total() - 1);
+      });
+  }
+
+  desbloquearPersonagem(id: number) {
+    this.http.delete(`${this.bloqueadosUrl}/${id}`).subscribe(() => {
+      this.bloqueados.update((list) => list.filter((p) => p.id !== id));
+      this.total.set(this.total() + 1);
     });
   }
 }

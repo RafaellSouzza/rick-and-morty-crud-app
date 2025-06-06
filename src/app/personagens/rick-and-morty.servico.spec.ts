@@ -14,6 +14,11 @@ describe('RickAndMortyServico', () => {
     });
     service = TestBed.inject(RickAndMortyServico);
     httpMock = TestBed.inject(HttpTestingController);
+    httpMock.expectOne('/api/personagens').flush([]);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should load personagens', () => {
@@ -52,13 +57,23 @@ describe('RickAndMortyServico', () => {
       image: ''
     });
 
+    const addReq = httpMock.expectOne('/api/personagens');
+    addReq.flush({ id: 1, name: 'Local', status: 'Alive', species: 'Human', image: '' });
+
     expect(service.todos().length).toBe(1);
 
     const added = service.todos()[0];
     service.atualizarPersonagem({ ...added, name: 'Editado' });
+
+    const updateReq = httpMock.expectOne(`/api/personagens/${added.id}`);
+    updateReq.flush({ ...added, name: 'Editado' });
+
     expect(service.todos()[0].name).toBe('Editado');
 
     service.removerPersonagem(added.id);
+    const deleteReq = httpMock.expectOne(`/api/personagens/${added.id}`);
+    deleteReq.flush({});
+
     expect(service.todos().length).toBe(0);
   });
 });

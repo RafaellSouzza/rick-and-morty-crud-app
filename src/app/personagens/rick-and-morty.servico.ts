@@ -5,6 +5,7 @@ import { Personagem } from './personagem.model';
 @Injectable({ providedIn: 'root' })
 export class RickAndMortyServico {
   private readonly baseUrl = 'https://rickandmortyapi.com/api';
+  private readonly localUrl = '/api/personagens';
   personagens = signal<Personagem[]>([]);
   locais = signal<Personagem[]>([]);
   filtro = signal('');
@@ -17,9 +18,16 @@ export class RickAndMortyServico {
     return [...locais, ...this.personagens()];
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.carregarLocais();
+  }
 
-  private nextId = 10000;
+  private carregarLocais() {
+    this.http.get<Personagem[]>(this.localUrl).subscribe((res) => {
+      this.locais.set(res);
+      this.total.set(this.personagens().length + res.length);
+    });
+  }
 
   carregarPersonagens(pagina = 1) {
     this.filtro.set('');
@@ -52,9 +60,12 @@ export class RickAndMortyServico {
   }
 
   adicionarPersonagem(personagem: Personagem) {
-    const novo = { ...personagem, id: this.nextId++ };
-    this.locais.update((list) => [...list, novo]);
-    this.total.set(this.total() + 1);
+    this.http
+      .post<Personagem>(this.localUrl, personagem)
+      .subscribe((novo) => {
+        this.locais.update((list) => [...list, novo]);
+        this.total.set(this.total() + 1);
+      });
   }
 
   localPersonagemById(id: number) {
@@ -62,13 +73,19 @@ export class RickAndMortyServico {
   }
 
   atualizarPersonagem(personagem: Personagem) {
-    this.locais.update((list) =>
-      list.map((p) => (p.id === personagem.id ? personagem : p))
-    );
+    this.http
+      .put<Personagem>(`${this.localUrl}/${personagem.id}`, personagem)
+      .subscribe((atualizado) => {
+        this.locais.update((list) =>
+          list.map((p) => (p.id === atualizado.id ? atualizado : p))
+        );
+      });
   }
 
   removerPersonagem(id: number) {
-    this.locais.update((list) => list.filter((p) => p.id !== id));
-    this.total.set(this.total() - 1);
+    this.http.delete(`${this.localUrl}/${id}`).subscribe(() => {
+      this.locais.update((list) => list.filter((p) => p.id !== id));
+      this.total.set(this.total() - 1);
+    });
   }
 }

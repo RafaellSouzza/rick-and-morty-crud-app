@@ -42,10 +42,10 @@ export class FormPersonagemComponent implements OnInit {
     gender: FormControl<string>;
     origin: FormControl<string>;
     image: FormControl<string>;
+    imageType: FormControl<'url' | 'file'>;
   }>;
 
   editMode = false;
-  imageInputType: 'url' | 'file' = 'url';
 
   onImageTypeChange() {
     this.form.controls.image.setValue('');
@@ -66,6 +66,7 @@ export class FormPersonagemComponent implements OnInit {
       gender: '',
       origin: '',
       image: '',
+      imageType: 'url' as 'url' | 'file',
     });
   }
 
@@ -80,7 +81,7 @@ export class FormPersonagemComponent implements OnInit {
           origin: personagem.origin?.name ?? '',
         });
         if (personagem.image?.startsWith('data:')) {
-          this.imageInputType = 'file';
+          this.form.controls.imageType.setValue('file');
         }
       }
     }
@@ -117,7 +118,7 @@ export class FormPersonagemComponent implements OnInit {
         this.form.controls.image.setValue(reader.result as string);
       };
       reader.readAsDataURL(file);
-      this.imageInputType = 'file';
+      this.form.controls.imageType.setValue('file');
     }
   }
 }

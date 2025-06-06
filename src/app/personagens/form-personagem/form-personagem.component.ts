@@ -8,15 +8,28 @@ import {
   FormControl,
 } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RickAndMortyServico } from '../rick-and-morty.servico';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { Personagem } from '../personagem.model';
 
 @Component({
   selector: 'app-form-personagem',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, MatButtonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterLink,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+  ],
   templateUrl: './form-personagem.component.html',
   styleUrls: ['./form-personagem.component.scss'],
 })
@@ -32,6 +45,7 @@ export class FormPersonagemComponent implements OnInit {
   }>;
 
   editMode = false;
+  imageInputType: 'url' | 'file' = 'url';
 
   constructor(
     private fb: FormBuilder,
@@ -61,6 +75,9 @@ export class FormPersonagemComponent implements OnInit {
           ...personagem,
           origin: personagem.origin?.name ?? '',
         });
+        if (personagem.image?.startsWith('data:')) {
+          this.imageInputType = 'file';
+        }
       }
     }
   }
@@ -96,6 +113,7 @@ export class FormPersonagemComponent implements OnInit {
         this.form.controls.image.setValue(reader.result as string);
       };
       reader.readAsDataURL(file);
+      this.imageInputType = 'file';
     }
   }
 }

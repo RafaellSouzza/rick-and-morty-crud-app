@@ -1,40 +1,60 @@
-<h2 *ngIf="!editMode">Novo Personagem</h2>
-<h2 *ngIf="editMode">Editar Personagem</h2>
-<form [formGroup]="form" (ngSubmit)="salvar()">
-  <label>
-    Nome:
-    <input formControlName="name" />
-  </label>
-  <label>
-    Status:
-    <input formControlName="status" />
-  </label>
-  <label>
-    Espécie:
-    <input formControlName="species" />
-  </label>
-  <label>
-    Gênero:
-    <input formControlName="gender" />
-  </label>
-  <label>
-    Origem:
-    <input formControlName="origin" />
-  </label>
-  <label>
-    Imagem URL:
-    <input formControlName="image" />
-  </label>
-  <label>
-    Selecionar Imagem:
-    <input type="file" (change)="onFileSelected($event)" />
-  </label>
-  <img
-    *ngIf="form.controls.image.value"
-    [src]="form.controls.image.value"
-    alt="preview"
-    style="max-width: 100%; margin-top: 8px"
-  />
-  <button mat-button type="submit">Salvar</button>
-  <a routerLink="/personagens">Voltar</a>
-</form>
+<div class="form-container">
+  <h2 *ngIf="!editMode">Novo Personagem</h2>
+  <h2 *ngIf="editMode">Editar Personagem</h2>
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <input matInput formControlName="status" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Espécie</mat-label>
+      <input matInput formControlName="species" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Gênero</mat-label>
+      <input matInput formControlName="gender" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Origem</mat-label>
+      <input matInput formControlName="origin" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo de Imagem</mat-label>
+      <mat-select [(ngModel)]="imageInputType" name="imageType">
+        <mat-option value="url">URL</mat-option>
+        <mat-option value="file">Arquivo</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div [ngSwitch]="imageInputType">
+      <mat-form-field *ngSwitchCase="'url'" appearance="fill">
+        <mat-label>Imagem URL</mat-label>
+        <input matInput formControlName="image" />
+      </mat-form-field>
+      <div *ngSwitchCase="'file'" class="file-input">
+        <input type="file" (change)="onFileSelected($event)" />
+      </div>
+    </div>
+
+    <img
+      *ngIf="form.controls.image.value"
+      [src]="form.controls.image.value"
+      alt="preview"
+      class="preview"
+    />
+
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit">Salvar</button>
+      <a mat-button routerLink="/personagens">Voltar</a>
+    </div>
+  </form>
+</div>

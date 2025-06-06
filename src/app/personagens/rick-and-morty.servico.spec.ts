@@ -76,4 +76,26 @@ describe('RickAndMortyServico', () => {
 
     expect(service.todos().length).toBe(0);
   });
+
+  it('should block and unblock personagens', () => {
+    const personagem: Personagem = {
+      id: 3,
+      name: 'Jerry',
+      status: 'Alive',
+      species: 'Human',
+      image: ''
+    };
+
+    service.bloquearPersonagem(personagem);
+    const blockReq = httpMock.expectOne('/api/bloqueados');
+    blockReq.flush({ ...personagem, bloqueado: true });
+
+    expect(service.bloqueados().length).toBe(1);
+
+    service.desbloquearPersonagem(personagem.id);
+    const unblockReq = httpMock.expectOne(`/api/bloqueados/${personagem.id}`);
+    unblockReq.flush({});
+
+    expect(service.bloqueados().length).toBe(0);
+  });
 });

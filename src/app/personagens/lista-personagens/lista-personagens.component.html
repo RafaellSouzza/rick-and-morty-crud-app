@@ -23,10 +23,9 @@
       <button
         mat-button
         color="warn"
-        *ngIf="personagem.id >= 10000"
-        (click)="excluir(personagem.id); $event.stopPropagation()"
+        (click)="excluir(personagem); $event.stopPropagation()"
       >
-        Excluir
+        {{ personagem.id >= 10000 ? 'Excluir' : 'Bloquear' }}
       </button>
     </mat-card>
   </mat-grid-tile>

@@ -1,12 +1,17 @@
-<h2>Personagens</h2>
-<button (click)="servico.carregarPersonagens()">Carregar</button>
+<div class="personagens-header">
+  <h2>Personagens</h2>
+  <button mat-raised-button color="primary" (click)="servico.carregarPersonagens()">
+    Carregar
+  </button>
+</div>
 
-<mat-grid-list [cols]="cols" gutterSize="16">
-  <mat-grid-tile *ngFor="let personagem of servico.todos()">
-    <mat-card
-      class="personagem-card"
-      (click)="abrirDetalhe(personagem)"
-    >
+<div class="personagens-container">
+  <mat-grid-list [cols]="cols" gutterSize="16">
+    <mat-grid-tile *ngFor="let personagem of servico.todos()">
+      <mat-card
+        class="personagem-card"
+        (click)="abrirDetalhe(personagem)"
+      >
       <img mat-card-image [src]="personagem.image" [alt]="personagem.name" />
       <mat-card-title>{{ personagem.name }}</mat-card-title>
       <mat-card-subtitle>{{ personagem.status }}</mat-card-subtitle>
@@ -30,7 +35,9 @@
     </mat-card>
   </mat-grid-tile>
 </mat-grid-list>
+</div>
 <mat-paginator
+  class="paginator"
   [length]="servico.totalCount()"
   [pageSize]="20"
   (page)="onPage($event)"

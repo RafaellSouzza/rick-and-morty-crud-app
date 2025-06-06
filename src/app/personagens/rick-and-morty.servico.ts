@@ -15,10 +15,10 @@ export class RickAndMortyServico {
 
   todos = computed(() => {
     const filtro = this.filtro().toLowerCase();
-    const locais = this.locais().filter((p) =>
-      p.name.toLowerCase().includes(filtro)
-    );
     const bloqueadosIds = new Set(this.bloqueados().map((b) => b.id));
+    const locais = this.locais()
+      .filter((p) => !bloqueadosIds.has(p.id))
+      .filter((p) => p.name.toLowerCase().includes(filtro));
     const remotos = this.personagens()
       .filter((p) => !bloqueadosIds.has(p.id))
       .filter((p) => p.name.toLowerCase().includes(filtro));

@@ -1,12 +1,13 @@
 import { Component, OnInit, HostListener, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PersonagemDialogComponent } from '../personagem-dialog/personagem-dialog.component';
+import { FormPersonagemComponent } from '../form-personagem/form-personagem.component';
 import { Personagem } from '../personagem.model';
 
 import { RickAndMortyServico } from '../rick-and-morty.servico';
@@ -24,6 +25,7 @@ import { RickAndMortyServico } from '../rick-and-morty.servico';
     MatButtonModule,
     MatDialogModule,
     PersonagemDialogComponent,
+    FormPersonagemComponent,
   ],
 
   templateUrl: './lista-personagens.component.html',
@@ -37,7 +39,6 @@ export class ListaPersonagensComponent implements OnInit {
 
   constructor(
     public servico: RickAndMortyServico,
-    private router: Router,
     private dialog: MatDialog
   ) {}
 
@@ -69,17 +70,23 @@ export class ListaPersonagensComponent implements OnInit {
     });
   }
 
-  editar(id: number) {
-    this.router.navigate(['/editar', id]);
+  editar(personagem: Personagem) {
+    this.dialog.open(FormPersonagemComponent, {
+      data: personagem,
+    });
   }
 
   excluir(personagem: Personagem) {
     if (confirm('Excluir personagem?')) {
       if (personagem.id >= 10000) {
         this.servico.removerPersonagem(personagem.id);
-      } else {
-        this.servico.bloquearPersonagem(personagem);
       }
+    }
+  }
+
+  bloquear(personagem: Personagem) {
+    if (confirm('Bloquear personagem?')) {
+      this.servico.bloquearPersonagem(personagem);
     }
   }
 }

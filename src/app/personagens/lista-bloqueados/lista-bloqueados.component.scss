@@ -1,5 +1,27 @@
 .personagem-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  user-select: none;
+  max-width: 300px;
+  margin: auto;
+  border: 2px solid #020202;
+  background-color: #282c34;
+  background: linear-gradient(0deg, rgb(222, 222, 222) 0%, rgba(16, 16, 16, 0.5) 30%);
+  box-shadow: 0 7px 20px 5px #00000088;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  transition: 0.5s all;
+  text-align: center;
+  cursor: pointer;
+
+  img {
+    border-radius: 0.5rem;
+    height: 300px;
+    object-fit: cover;
+  }
+
+  &:hover {
+    border: 1px solid #ffffff44;
+    box-shadow: 0 7px 20px 5px #000000aa;
+    transform: scale(1.015);
+    filter: brightness(1.05);
+  }
 }

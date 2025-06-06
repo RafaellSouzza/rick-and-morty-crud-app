@@ -1,6 +1,10 @@
+
 .app-toolbar {
   display: flex;
   align-items: center;
+  padding: 0 1rem;
+  background: linear-gradient(45deg, #3f51b5, #2196f3);
+  color: #fff;
 }
 
 .logo {
@@ -13,7 +17,23 @@
   flex: 1 1 auto;
 }
 
-input[matInput] {
+
+.search-field {
   margin-right: 1rem;
-  max-width: 200px;
+  width: 200px;
+}
+
+button {
+  mat-icon {
+    margin-right: 4px;
+  }
+}
+
+@media (max-width: 600px) {
+  .search-field {
+    width: 120px;
+  }
+  .hide-mobile {
+    display: none;
+  }
 }

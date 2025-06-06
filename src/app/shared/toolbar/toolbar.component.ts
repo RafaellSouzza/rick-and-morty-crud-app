@@ -6,6 +6,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormPersonagemComponent } from '../../personagens/form-personagem/form-personagem.component';
 import { RickAndMortyServico } from '../../personagens/rick-and-morty.servico';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
@@ -19,8 +21,10 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
     ReactiveFormsModule,
     MatToolbarModule,
     MatInputModule,
+    MatFormFieldModule,
     MatButtonModule,
     MatDialogModule,
+    MatIconModule,
   ],
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],

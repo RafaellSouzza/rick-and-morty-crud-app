@@ -85,6 +85,9 @@ export class RickAndMortyServico {
   }
 
   adicionarPersonagem(personagem: Personagem) {
+    if (!personagem.id || personagem.id < 10000) {
+      personagem.id = Date.now();
+    }
     this.http
       .post<Personagem>(this.localUrl, personagem)
       .subscribe((novo) => {

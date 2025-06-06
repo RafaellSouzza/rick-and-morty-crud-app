@@ -93,6 +93,13 @@ is missing, install it with:
 npm install zone.js
 ```
 
+Jest also requires `@angular/platform-browser-dynamic`. If it is missing after
+installing dependencies, add it with:
+
+```bash
+npm install @angular/platform-browser-dynamic
+```
+
 ## Running Tests
 
 Execute unit tests with Jest:

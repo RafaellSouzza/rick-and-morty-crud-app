@@ -1,5 +1,5 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, HostListener, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -33,6 +33,8 @@ export class ListaPersonagensComponent implements OnInit {
 
   cols = 4;
 
+  private readonly platformId = inject(PLATFORM_ID);
+
   constructor(
     public servico: RickAndMortyServico,
     private router: Router,
@@ -41,7 +43,9 @@ export class ListaPersonagensComponent implements OnInit {
 
   @HostListener('window:resize')
   onResize() {
-    this.setCols(window.innerWidth);
+    if (isPlatformBrowser(this.platformId)) {
+      this.setCols(window.innerWidth);
+    }
   }
 
   private setCols(width: number) {
@@ -50,7 +54,9 @@ export class ListaPersonagensComponent implements OnInit {
 
   ngOnInit() {
     this.servico.carregarPersonagens();
-    this.setCols(window.innerWidth);
+    if (isPlatformBrowser(this.platformId)) {
+      this.setCols(window.innerWidth);
+    }
   }
 
   onPage(event: PageEvent) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Optional } from '@angular/core';
+import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RickAndMortyServico } from '../rick-and-morty.servico';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -56,7 +56,8 @@ export class FormPersonagemComponent implements OnInit {
     private servico: RickAndMortyServico,
     private router: Router,
     private route: ActivatedRoute,
-    @Optional() private dialogRef?: MatDialogRef<FormPersonagemComponent>
+    @Optional() private dialogRef?: MatDialogRef<FormPersonagemComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data?: Personagem
   ) {
     this.form = this.fb.nonNullable.group({
       id: 0,
@@ -71,18 +72,21 @@ export class FormPersonagemComponent implements OnInit {
   }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
+    let personagem: Personagem | undefined = this.data;
+    if (!personagem) {
+      const id = this.route.snapshot.paramMap.get('id');
+      if (id) {
+        personagem = this.servico.localPersonagemById(+id);
+      }
+    }
+    if (personagem) {
       this.editMode = true;
-      const personagem = this.servico.localPersonagemById(+id);
-      if (personagem) {
-        this.form.patchValue({
-          ...personagem,
-          origin: personagem.origin?.name ?? '',
-        });
-        if (personagem.image?.startsWith('data:')) {
-          this.form.controls.imageType.setValue('file');
-        }
+      this.form.patchValue({
+        ...personagem,
+        origin: personagem.origin?.name ?? '',
+      });
+      if (personagem.image?.startsWith('data:')) {
+        this.form.controls.imageType.setValue('file');
       }
     }
   }

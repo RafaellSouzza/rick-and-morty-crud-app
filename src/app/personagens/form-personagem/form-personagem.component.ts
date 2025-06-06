@@ -47,6 +47,10 @@ export class FormPersonagemComponent implements OnInit {
   editMode = false;
   imageInputType: 'url' | 'file' = 'url';
 
+  onImageTypeChange() {
+    this.form.controls.image.setValue('');
+  }
+
   constructor(
     private fb: FormBuilder,
     private servico: RickAndMortyServico,

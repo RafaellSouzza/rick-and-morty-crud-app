@@ -29,7 +29,11 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Tipo de Imagem</mat-label>
-      <mat-select [(ngModel)]="imageInputType" name="imageType">
+      <mat-select
+        [(ngModel)]="imageInputType"
+        name="imageType"
+        (selectionChange)="onImageTypeChange()"
+      >
         <mat-option value="url">URL</mat-option>
         <mat-option value="file">Arquivo</mat-option>
       </mat-select>
